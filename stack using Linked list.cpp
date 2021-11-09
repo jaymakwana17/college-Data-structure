@@ -1,4 +1,4 @@
-/**************** stack usinf linked list **************/
+/**************** stack using linked list **************/
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -8,41 +8,42 @@ struct node
 	struct node *next;
 };
 
-int push(struct node*, int);
-int pop(struct node*);
-int display(struct node*);
+struct node *push(struct node*);
+struct node *pop(struct node*);
+struct node *display(struct node*);
 
 int main()
 {
 	struct node *head=NULL;  //intializing empty stack
-	int i,ele,ch;
+	int i,ch;
 	
-	
+
 while(ch!=4)
 {
 	printf("\n1:Push");
 	printf("\n2:Pop");
 	printf("\n3:Display Stack");
 	printf("\n4:Exit:");
+
 	printf("\n Select you choice \n->");
 	scanf("%d",&ch);
 	
 	switch(ch)
 	{
 		case 1:
-			printf("Enter element to be insert:");
-			scanf("%d",&ele);
-			push(head,ele);
+		
+			head=push(head);
 			break;
 		case 2:
-			pop(head);
+			head=pop(head);
 			break;
 		case 3:
-			display(head);
+			head=display(head);
 			break;
 		case 4:
 			return 4;
 			break;
+		
 		default:
 			printf("Enter correct choice..!");
 	}
@@ -52,17 +53,49 @@ return 0;
 
 /****************** functions *********************/
 
-int push(struct node *top, int ele)
+struct node *push(struct node *top)
 {
-	struct node *temp;
-	temp=(struct node*)malloc(sizeof (struct node));
-	if(temp==NULL)
-	printf("overflow");
-	temp->data=ele;
-	temp->next=top;
-	top=temp;
+    struct node *new_node, *ptr;
+    int num;
+    printf("Enter -1 to stop linked list\n");
+    printf("Enter the Data:");
+    scanf("%d",&num);
+    while (num!=-1){
+        new_node= (struct node*)(malloc(sizeof(struct node)));
+        new_node->data=num;
+
+        if(top==NULL){
+            new_node->next=NULL;
+            top=new_node;
+        }
+        else{
+            ptr=top;
+            while(ptr->next!=NULL)
+                ptr=ptr->next;
+                ptr->next=new_node;
+                new_node->next=NULL;
+            }
+            printf("Enter the data:");
+            scanf("%d",&num);
+        }
+        
+    return top;
+
 }
-int pop(struct node *top)
+
+//struct node *push(struct node *top, int ele)
+//{
+//	struct node *temp;
+//	temp=(struct node*)malloc(sizeof (struct node));
+//	if(top==NULL)
+//	printf("overflow");
+//	top=temp;
+//	temp->data=ele;
+//	temp->next=NULL;
+//	return top;
+//	
+//}
+struct node *pop(struct node *top)
 {
 	struct node *temp;
 	int item;
@@ -75,27 +108,39 @@ int pop(struct node *top)
 	item=temp->data;
 	printf("Deleted Element:%d",item);
 	top=temp->next;
+	//top->next=NULL;
 	free(temp);
+	
+	return top;
 }
 
-int display(struct node *top)
+struct node *display(struct node *top)
 {
    struct node *temp;
+//   temp=top;
+//    	while(temp!=NULL)
+//			{
+//			 		printf("->%d",temp->data);
+//					 	temp=temp->next;
+//			 }
    
-   if(top==NULL)
-   return ;
-   /*{
-     printf("underflow..!");
-	}
-	else{*/
+//  if(top==NULL)   
+// {
+//     printf("underflow..!");
+//	 	}
+
+	//else{
+	
 	temp=top;
    
    while(temp!=NULL)
    {
-   	printf("%d->",temp->data);
-   	temp=temp->next;
+	
+	   printf("%d->",temp->data);
+   			temp=temp->next;
 	}
-	 //}
+  //}
+  return top;
 }
 
 
